@@ -1,0 +1,11 @@
+<div id="progress-container" class="relative w-full mb-6">
+  <progress class="w-full h-6 rounded-full overflow-hidden"
+            style="accent-color: #3b82f6;"
+            value="{{ percent }}"
+            max="100">
+    {{ percent }}%
+  </progress>
+  <div class="absolute inset-0 flex items-center justify-center text-sm font-bold text-black">
+    {{ percent }}%
+  </div>
+</div>

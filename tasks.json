@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "label": "Upload key documents",
+    "done": true
+  },
+  {
+    "id": 2,
+    "label": "Set audit deadlines",
+    "done": true
+  },
+  {
+    "id": 3,
+    "label": "Answer pre-check questions",
+    "done": true
+  },
+  {
+    "id": 4,
+    "label": "Review compliance checklist",
+    "done": true
+  },
+  {
+    "id": 5,
+    "label": "test",
+    "done": true
+  }
+]

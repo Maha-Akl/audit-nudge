@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit Nudge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/daisyui"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen p-6">
+  <div class="max-w-xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+    <h1 class="text-3xl font-bold mb-4 flex items-center gap-2">
+      <span>🧠</span>
+      <span>Audit Nudge</span>
+    </h1>
+    <p class="mb-4">Complete these tasks to prepare for your audit!</p>
+
+    <!-- Progress Bar -->
+    <div id="progress-container"
+         hx-get="/progress"
+         hx-trigger="load"
+         hx-swap="outerHTML">
+      Loading progress...
+    </div>
+
+    <!-- Task List -->
+    <div id="task-list">
+      {% for task in tasks %}
+      <div class="flex items-center mb-3">
+        <input 
+          type="checkbox" 
+          {% if task.done %}checked{% endif %}
+          class="checkbox mr-3"
+          hx-post="/complete/{{ task.id }}"
+          hx-target="#task-{{ task.id }}"
+          hx-swap="outerHTML"
+        />
+        <div id="task-{{ task.id }}" class="text-lg {% if task.done %}line-through text-gray-400{% endif %}">
+          {{ task.label }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Optional: Add new task -->
+    <form hx-post="/add" hx-swap="none" class="mt-6 flex">
+      <input type="text" name="label" class="input input-bordered flex-grow mr-2" placeholder="Add new task…" />
+      <button class="btn btn-primary" type="submit" onclick="setTimeout(()=>location.reload(), 300)">Add</button>
+    </form>
+  </div>
+
+  <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+  <script>
+    document.body.addEventListener('htmx:afterRequest', function(evt) {
+      if (evt.detail.elt?.type === 'checkbox') {
+        htmx.ajax('GET', '/progress', { target: '#progress-container' });
+      }
+    });
+  </script>
+</body>
+</html>
